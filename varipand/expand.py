@@ -36,6 +36,15 @@ def _phrases_based_on_pattern(pattern, settings):
             yield "".join([prefix, variant, suffix])
 
 
+def _deduplicated_iterable(items):
+    already_yielded = set()
+
+    for item in items:
+        if item not in already_yielded:
+            yield item
+            already_yielded.add(item)
+
+
 def expand(settings):
     """
     Expand a single pattern
@@ -52,23 +61,13 @@ def expand(settings):
     return f
 
 
-def _deduplicated_iterable(items):
-    already_yielded = set()
-
-    for item in items:
-        if item not in already_yielded:
-            yield item
-            already_yielded.add(item)
-
-
 def expand_all(settings):
     """
         Expand a set of patterns into phrases
     """
 
     def f(patterns):
-        all_variants = itertools.chain(
-            *[expand(settings)(pattern) for pattern in patterns])
+        all_variants = itertools.chain(*map(expand(settings), patterns))
         return _deduplicated_iterable(all_variants)
 
     return f

@@ -27,6 +27,9 @@ def _variants_from_list(list_of_variants, settings):
 
 
 def expand(settings):
+    """
+    Expand a single pattern
+    """
     def f(pattern):
 
         if _has_variants(pattern, settings):

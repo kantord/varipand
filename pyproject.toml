@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "varipand"
-version = "0.1.0"
+version = "1.0.0"
 description = "Expand a compressed form of different variations of a sentence"
 authors = ["Dániel Kántor <git@daniel-kantor.com>"]
 license = "GPLv3"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"

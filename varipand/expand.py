@@ -52,7 +52,7 @@ def _deduplicated(items):
             already_yielded.add(item)
 
 
-def expand(patterns, settings):
+def expand_all(patterns, settings):
     """
         Expand a set of patterns into phrases
     """

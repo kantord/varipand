@@ -55,11 +55,14 @@ def _deduplicated(items):
             already_yielded.add(item)
 
 
-def expand_all(patterns, settings):
+def expand_all(settings):
     """
         Expand a set of patterns into phrases
     """
 
-    all_variants = itertools.chain(
-        *[expand(settings)(pattern) for pattern in patterns])
-    return _deduplicated(all_variants)
+    def f(patterns):
+        all_variants = itertools.chain(
+            *[expand(settings)(pattern) for pattern in patterns])
+        return _deduplicated(all_variants)
+
+    return f

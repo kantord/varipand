@@ -26,7 +26,7 @@ def _variants_from_list(list_of_variants, settings):
     return list_of_variants.split(comma_symbol)
 
 
-def _variants(settings):
+def expand(settings):
     def f(pattern):
 
         if _has_variants(pattern, settings):
@@ -58,5 +58,5 @@ def expand_all(patterns, settings):
     """
 
     all_variants = itertools.chain(
-        *[_variants(settings)(pattern) for pattern in patterns])
+        *[expand(settings)(pattern) for pattern in patterns])
     return _deduplicated(all_variants)

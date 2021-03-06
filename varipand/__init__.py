@@ -6,7 +6,7 @@ Features:
 
 """
 
-from varipand.expand import expand_all
+from varipand.expand import expand_all, expand
 
 
 __version__ = '1.0.0'

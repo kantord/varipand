@@ -53,6 +53,10 @@ def _deduplicated(items):
 
 
 def expand(patterns, settings):
+    """
+        Expand a set of patterns into phrases
+    """
+
     all_variants = itertools.chain(
         *[_variants(settings)(pattern) for pattern in patterns])
     return _deduplicated(all_variants)

@@ -68,6 +68,15 @@ def test_returns_a_new_phrase_for_each_variant():
     ]
 
 
+def test_expand_doesnt_include_duplicates():
+    assert list(expand(DEFAULT_CONFIG)("(Hello/Hello) (World/You)(!/)")) == [
+        "Hello World!",
+        "Hello You!",
+        "Hello World",
+        "Hello You",
+    ]
+
+
 def test_returns_a_new_phrase_for_each_variant_with_alternative_delimiter():
     assert list(expand(ALTERNATIVE_CONFIG_1)("Hello [ World, You ][ !,  ]")) == [
         "Hello World!",

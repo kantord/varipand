@@ -10,7 +10,7 @@ def _get_prefix(pattern, settings):
 def _has_variants(pattern, settings):
     start_symbol = settings["delimiters"]["start"]
 
-    return start_symbol not in pattern
+    return start_symbol in pattern
 
 
 def _get_variants_and_suffix(right_hand_side, settings):
@@ -26,27 +26,33 @@ def _variants_from_list(list_of_variants, settings):
     return list_of_variants.split(comma_symbol)
 
 
+def _phrases_based_on_pattern(pattern, settings):
+    prefix, right_hand_side = _get_prefix(pattern, settings)
+    variants, suffix_pattern = _get_variants_and_suffix(
+        right_hand_side, settings)
+
+    for suffix in expand(settings)(suffix_pattern):
+        for variant in variants:
+            yield "".join([prefix, variant, suffix])
+
+
 def expand(settings):
     """
     Expand a single pattern
     """
     def f(pattern):
-
-        if _has_variants(pattern, settings):
+        if not _has_variants(pattern, settings):
             yield pattern
             return
 
-        prefix, right_hand_side = _get_prefix(pattern, settings)
-        variants, suffix_pattern = _get_variants_and_suffix(
-            right_hand_side, settings)
-        for suffix in f(suffix_pattern):
-            for variant in variants:
-                yield "".join([prefix, variant, suffix])
+        phrases = _phrases_based_on_pattern(pattern, settings)
+        for phrase in _deduplicated_iterable(phrases):
+            yield phrase
 
     return f
 
 
-def _deduplicated(items):
+def _deduplicated_iterable(items):
     already_yielded = set()
 
     for item in items:
@@ -63,6 +69,6 @@ def expand_all(settings):
     def f(patterns):
         all_variants = itertools.chain(
             *[expand(settings)(pattern) for pattern in patterns])
-        return _deduplicated(all_variants)
+        return _deduplicated_iterable(all_variants)
 
     return f

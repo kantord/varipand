@@ -21,7 +21,7 @@ Expand a single pattern
 #### expand\_all
 
 ```python
-expand_all(patterns, settings)
+expand_all(settings)
 ```
 
 Expand a set of patterns into phrases

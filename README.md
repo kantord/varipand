@@ -1,2 +1,10 @@
+<a name="varipand"></a>
 # varipand
-Expand a compressed form of different variations of a sentence
+
+Features:
+
+* Every possible expanded variation is only printed once
+
+<a name="varipand.expand"></a>
+# varipand.expand
+
